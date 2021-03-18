@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TodoListController;
+use App\Http\Controllers\TodoItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,3 +19,8 @@ use App\Http\Controllers\TodoListController;
 Route::POST('/todoList',[TodoListController::class,'store']);
 Route::DELETE('/todoList/{todoList}',[TodoListController::class,'destroy']);
 Route::PATCH('/todoList/{todoList}',[TodoListController::class,'update']);
+
+
+Route::POST('/todoItems',[TodoItemController::class,'store']);
+Route::PATCH('/todoItems/{todoItem}',[TodoItemController::class,'update']);
+Route::DELETE('/todoItems/{todoItem}',[TodoItemController::class,'destroy']);
