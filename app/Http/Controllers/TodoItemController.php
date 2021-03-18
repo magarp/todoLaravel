@@ -12,12 +12,28 @@ class TodoItemController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * @param  Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+      $request->validate([
+        'overdue' => 'in:1',
+        'completion_status' => 'in:1,0',
+      ]);
+
+      $todoItems = TodoItem::when($request->todo_list_id, function($query){
+        return $query->where('todo_list_id',request('todo_list_id'));
+      })->when($request->overdue, function($query){
+        return $query->where('is_completed',0)->whereDate('due_date','<',date('Y-m-d'));
+      })->get();
+      if(isset($request->completion_status)){
+        $todoItems = $todoItems->where('is_completed',$request->completion_status);
+      }
+
+
+      return response()->json(["data" => ["status"=>200, 'todoItems' => $todoItems]]);
+
     }
 
 

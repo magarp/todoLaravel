@@ -21,6 +21,7 @@ Route::DELETE('/todoList/{todoList}',[TodoListController::class,'destroy']);
 Route::PATCH('/todoList/{todoList}',[TodoListController::class,'update']);
 
 
+Route::GET('/todoItems',[TodoItemController::class,'index']);
 Route::POST('/todoItems',[TodoItemController::class,'store']);
 Route::PATCH('/todoItems/{todoItem}',[TodoItemController::class,'update']);
 Route::DELETE('/todoItems/{todoItem}',[TodoItemController::class,'destroy']);
