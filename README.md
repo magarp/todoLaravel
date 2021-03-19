@@ -1,62 +1,206 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Laravel 8.2 REST API TODO
+This API is created using Laravel 8.2.
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+#### Following are the Models
+* TodoItem
+* TodoList
 
-## About Laravel
+#### Usage
+Clone the project via git clone or download the zip file.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+##### .env
+create a .env file in the root directory of your project. Set up database credentials of your choice.  
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+##### Composer Install
+cd into the project directory via terminal and run the following  command to install composer packages.
+###### `composer install`
+##### Generate Key
+then run the following command to generate fresh key.
+###### `php artisan key:generate`
+##### Run Migration
+then run the following command to create migrations in the database.
+###### `php artisan migrate:fresh`
+##### Passport Install
+serve the program
+###### `php artisan serve`
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+### API EndPoints
+* POST Create TodoList
+* Route: `/api/todoList`
+* Headers: application/json
+* Body:
+  ```
+  {
+    'name': 'Things to do today'
+  }
+* Response
+  ```
+  {
+    "data": {
+        "status": 200,
+        "todoList": {
+            "name": "Things to do today",
+            "updated_at": "2021-03-18T19:43:02.000000Z",
+            "created_at": "2021-03-18T19:43:02.000000Z",
+            "id": 1
+        }
+    }
+  }
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+*****
+* DELETE TodoList
+* Route: `/api/todoList/{todoListID}`
+* Headers: application/json
+* Response
+  ```
+  {
+      "data": {
+          "status": 200,
+          "message": "Todolist deleted."
+      }
+  }
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+*****
+* POST Update TodoList
+* Route: `/api/todoList/{todoListID}`
+* Headers: application/json
+* Body:
+  ```
+  {
+    'name': 'Things to do on weekends', "_method" : 'patch'
+  }
+* Response
+  ```
+    {
+        "data": {
+            "status": 200,
+            "message": "Todolist updated.",
+            "todoList": {
+                "id": 1,
+                "name": "Things to do on weekends",
+                "created_at": "2021-03-18T20:13:37.000000Z",
+                "updated_at": "2021-03-18T20:14:07.000000Z"
+            }
+        }
+    }
 
-## Laravel Sponsors
+*****
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+* POST Create TodoItem
+* Route: `/api/todoItems`
+* Headers: application/json
+* Body:
+  ```
+  {
+    'description': 'Buy more milk',
+    "due_date" : '2021-03-17',
+    "todo_list_id" : 1
+  }
+* Response
+  ```
+    {
+      "data": {
+          "status": 200,
+          "todoItem": {
+              "todo_list_id": "1",
+              "description": "Buy more milk",
+              "due_date": "2021-03-17",
+              "updated_at": "2021-03-18T20:18:26.000000Z",
+              "created_at": "2021-03-18T20:18:26.000000Z",
+              "id": 1
+          }
+      }
+    }
 
-### Premium Partners
+ *****
+* POST Update TodoItem
+* Route: `/api/todoItems/{todoItemID}`
+* Headers: application/json
+* Body:
+  ```
+  {
+    '_method':'patch',
+    'description': 'Buy more milk and egg',
+    "due_date" : 2020-03-17,
+    "is_completed" : 1
+  }
+* Response
+  ```
+  {
+      "data": {
+          "status": 200,
+          "message": "Todo item updated.",
+          "todoItem": {
+              "id": 1,
+              "todo_list_id": "1",
+              "description": "Buy more milk and eggs",
+              "due_date": "2020-03-17",
+              "is_completed": "1",
+              "created_at": "2021-03-18T20:18:26.000000Z",
+              "updated_at": "2021-03-18T20:21:33.000000Z"
+          }
+      }
+  }
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
+*****
+* Delete TodoItem
+* Route: `/api/todoItems/{todoItemID}`
+* Headers: application/json
+* Response
+   ```
+    {
+      "data": {
+        "status": 200,
+        "message": "Todo item deleted."
+      }
+    }
 
-## Contributing
+*****
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+* GET List TodoItems
+* Route: `/api/todoItems`
+* Params(optional):
+  ```
+  {
+    overdue: 1,  // Filters TodoItems which as incomplete and past due date.
+    completion_status: 0,  // Filters TodoItems which are incomplete(0) or complete(1)
+    todo_list_id: 3 // Filters TodoItems based on todo_list_id.
+  }
+* Headers: application/json
+* Response
+  ```
+  {
+      "data": {
+          "status": 200,
+          "todoItems": [
+              {
+                  "id": 5,
+                  "todo_list_id": "3",
+                  "description": "Buy more milk",
+                  "due_date": "2021-03-01",
+                  "is_completed": "0",
+                  "created_at": "2021-03-18T20:26:07.000000Z",
+                  "updated_at": "2021-03-18T20:26:07.000000Z"
+              },
+              {
+                  "id": 6,
+                  "todo_list_id": "3",
+                  "description": "Buy more milk",
+                  "due_date": "2021-03-01",
+                  "is_completed": "0",
+                  "created_at": "2021-03-18T20:39:39.000000Z",
+                  "updated_at": "2021-03-18T20:39:39.000000Z"
+              },
+              {
+                  "id": 7,
+                  "todo_list_id": "3",
+                  "description": "Buy more milk and tea",
+                  "due_date": "2021-03-01",
+                  "is_completed": "0",
+                  "created_at": "2021-03-18T20:39:47.000000Z",
+                  "updated_at": "2021-03-18T20:39:47.000000Z"
+              }
+          ]
+      }
+  }
